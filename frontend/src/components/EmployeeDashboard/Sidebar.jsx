@@ -7,6 +7,7 @@ import {
   FaCogs,
   FaTachometerAlt,
   FaUsers,
+  FaCalendar,  // Import FaCalendar for calendar option
 } from "react-icons/fa";
 import { useAuth } from "../../context/authContext";
 
@@ -83,6 +84,10 @@ const Sidebar = () => {
           <FaUsers />
           <span>My Profile</span>
         </NavLinkStyled>
+        <NavLinkStyled to="/employee-dashboard/calendar">
+          <FaCalendar />
+          <span>Calendar</span>
+        </NavLinkStyled>
         <NavLinkStyled to={`/employee-dashboard/leaves/${user._id}`}>
           <FaBuilding />
           <span>Leaves</span>
@@ -95,6 +100,8 @@ const Sidebar = () => {
           <FaCogs />
           <span>Settings</span>
         </NavLinkStyled>
+        
+        
       </LinkContainer>
     </SidebarContainer>
   );
