@@ -40,7 +40,7 @@ const StyledDateTimePicker = styled(DateTimePicker)`
   border-radius: 10px;
   background-color: #fff;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  
+
   .react-datetime-picker__wrapper {
     position: relative;
     width: 100%;
@@ -86,7 +86,7 @@ const Google = () => {
 
   const dateTimePickerRef = useRef(null);
 
-  const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone; // Get user's local timezone
+  const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   useEffect(() => {
     if (session) {
@@ -96,23 +96,24 @@ const Google = () => {
 
   const adjustCalendarPosition = () => {
     const pickerElement = dateTimePickerRef.current;
-    const calendarElement = document.querySelector(".react-datetime-picker__calendar");
+    const calendarElement = document.querySelector(
+      ".react-datetime-picker__calendar"
+    );
 
     if (pickerElement && calendarElement) {
       const pickerRect = pickerElement.getBoundingClientRect();
       const calendarRect = calendarElement.getBoundingClientRect();
 
-      // If calendar overflows the viewport (bottom side), move it above the input
       if (window.innerHeight - pickerRect.bottom < calendarRect.height) {
-        calendarElement.style.top = `${pickerRect.top - calendarRect.height - 10}px`;
+        calendarElement.style.top = `${
+          pickerRect.top - calendarRect.height - 10
+        }px`;
       } else {
-        // Otherwise, position it normally below the input
         calendarElement.style.top = `${pickerRect.bottom + 10}px`;
       }
     }
   };
 
-  // Adjust calendar position when the calendar opens
   useEffect(() => {
     adjustCalendarPosition();
     window.addEventListener("resize", adjustCalendarPosition);
@@ -138,7 +139,7 @@ const Google = () => {
   async function signOut() {
     setLoading(true);
     await supabase.auth.signOut();
-    window.location.href = "/admin-dashboard"; // Redirect to admin dashboard after sign-out
+    window.location.href = "/admin-dashboard";
     setLoading(false);
   }
 
@@ -166,22 +167,25 @@ const Google = () => {
         description: eventDescription,
         start: {
           dateTime: start.toISOString(),
-          timeZone: localTimezone, // Automatically set user's local timezone
+          timeZone: localTimezone,
         },
         end: {
           dateTime: end.toISOString(),
-          timeZone: localTimezone, // Automatically set user's local timezone
+          timeZone: localTimezone,
         },
       };
 
-      const response = await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(event),
-      });
+      const response = await fetch(
+        "https://www.googleapis.com/calendar/v3/calendars/primary/events",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(event),
+        }
+      );
 
       const responseData = await response.json();
       if (response.ok) {
